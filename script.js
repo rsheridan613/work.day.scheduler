@@ -1,58 +1,110 @@
-// Wrap all code that interacts with the DOM in a call to jQuery to ensure that
-// the code isn't run until the browser has finished rendering all the elements
-// in the html.
-var dateEl = $("#currentDay");
-var timeBlockEl = $(".time-block");
-var descriptionEl = $(".description");
-var saveBtnEl = $(".saveBtn");
-var hour = [
-  "hour-9",
-  "hour-10",
-  "hour-11",
-  "hour-12",
-  "hour-13",
-  "hour-14",
-  "hour-15",
-  "hour-16",
-  "hour-17",
-];
-console.log(hour.length);
+$(document).ready(function () {
+  var dateEl = $("#currentDay");
+  var saveBtnEl = $(".saveBtn");
+  var saved = JSON.parse(localStorage.getItem("saved"));
 
-$(function () {
-  // TODO: Add a listener for click events on the save button. This code should
-  // use the id in the containing time-block as a key to save the user input in
-  // local storage. HINT: What does `this` reference in the click listener
-  // function? How can DOM traversal be used to get the "hour-x" id of the
-  // time-block containing the button that was clicked? How might the id be
-  // useful when saving the description in local storage?
+  $(function () {
+    // save to local storage on button click
+    saveBtnEl.on("click", function () {
+      var userInput = $(this).siblings(".description").val();
+      var hour = this.parentElement.id;
+      var temp = JSON.parse(localStorage.getItem("saved")) || [];
+      console.log(temp);
+      temp.push({ hour, userInput });
 
-  saveBtnEl.on("click", function () {
-    var userInput = $(this).siblings(".description").val();
-    var hour = this.parentElement.id;
-    localStorage.setItem(hour, userInput);
-    $(this).siblings(".description").text(localStorage.getItem(hour));
-  });
+      localStorage.setItem("saved", JSON.stringify(temp));
+      console.log(localStorage.getItem("saved"));
+    });
 
-  for (let i = 0; i < hour.length; i++) {
-    var timeSlot = hour[i];
-    console.log(timeSlot);
-    if (localStorage.getItem("hour-[i]") === timeSlot) {
-      timeSlot.children(".description").text(localStorage.getItem());
+    //get from local storage
+    $(".description").each(function (index, value) {
+      console.log(saved);
+      let id = $(this).parent().attr("id");
+      if (saved !== null) {
+        for (let i = 0; i < saved.length; i++) {
+          const element = saved[i];
+          if (id == element.hour) {
+            $(this).text(element.userInput);
+          }
+        }
+      }
+    });
+
+    //change color of background
+    //9am
+
+    if (dayjs().format("H") > 9) {
+      $("#hour-9").addClass("past");
+    } else if (dayjs().format("H") == 9) {
+      $("#hour-9").addClass("present");
+    } else if (dayjs().format("H") < 9) {
+      $("#hour-9").addClass("future");
     }
-  }
-
-  // TODO: Add code to apply the past, present, or future class to each time
-  // block by comparing the id to the current hour. HINTS: How can the id
-  // attribute of each time-block be used to conditionally add or remove the
-  // past, present, and future classes? How can Day.js be used to get the
-  // current hour in 24-hour time?
-  console.log(dayjs().format("H").val());
-
-  // TODO: Add code to get any user input that was saved in localStorage and set
-  // the values of the corresponding textarea elements. HINT: How can the id
-  // attribute of each time-block be used to do this?
-
-  // TODO: Add code to display the current date in the header of the page.
-
-  dateEl.text(dayjs().format("dddd, MMMM D"));
+    //10am
+    if (dayjs().format("H") > 10) {
+      $("#hour-10").addClass("past");
+    } else if (dayjs().format("H") == 10) {
+      $("#hour-10").addClass("present");
+    } else if (dayjs().format("H") < 10) {
+      $("#hour-10").addClass("future");
+    }
+    //11am
+    if (dayjs().format("H") > 11) {
+      $("#hour-11").addClass("past");
+    } else if (dayjs().format("H") == 11) {
+      $("#hour-11").addClass("present");
+    } else if (dayjs().format("H") < 11) {
+      $("#hour-11").addClass("future");
+    }
+    //12pm
+    if (dayjs().format("H") > 12) {
+      $("#hour-12").addClass("past");
+    } else if (dayjs().format("H") == 12) {
+      $("#hour-12").addClass("present");
+    } else if (dayjs().format("H") < 12) {
+      $("#hour-12").addClass("future");
+    }
+    //1pm
+    if (dayjs().format("H") > 13) {
+      $("#hour-13").addClass("past");
+    } else if (dayjs().format("H") == 13) {
+      $("#hour-13").addClass("present");
+    } else if (dayjs().format("H") < 13) {
+      $("#hour-13").addClass("future");
+    }
+    //2pm
+    if (dayjs().format("H") > 14) {
+      $("#hour-14").addClass("past");
+    } else if (dayjs().format("H") == 14) {
+      $("#hour-14").addClass("present");
+    } else if (dayjs().format("H") < 14) {
+      $("#hour-14").addClass("future");
+    }
+    //3pm
+    if (dayjs().format("H") > 15) {
+      $("#hour-15").addClass("past");
+    } else if (dayjs().format("H") == 15) {
+      $("#hour-15").addClass("present");
+    } else if (dayjs().format("H") < 15) {
+      $("#hour-15").addClass("future");
+    }
+    //4pm
+    if (dayjs().format("H") > 16) {
+      $("#hour-16").addClass("past");
+    } else if (dayjs().format("H") == 16) {
+      $("#hour-16").addClass("present");
+    } else if (dayjs().format("H") < 16) {
+      $("#hour-16").addClass("future");
+    }
+    //5pm
+    if (dayjs().format("H") > 17) {
+      $("#hour-17").addClass("past");
+    } else if (dayjs().format("H") == 17) {
+      $("#hour-17").addClass("present");
+    } else if (dayjs().format("H") < 17) {
+      $("#hour-17").addClass("future");
+    }
+    //Date on the header
+    dateEl.text(dayjs().format("dddd, MMMM D"));
+  });
 });
