@@ -9,5 +9,5 @@ Active hour will change as the day goes on with the background of the block chan
 
 ## Visuals
 
-![Screenshot of deployed site](Screenshot_20221107_054628)
+![Screenshot of deployed site](Screenshot_20221107_054628.png)
 https://rsheridan613.github.io/work.day.scheduler/
