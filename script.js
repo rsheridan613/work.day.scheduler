@@ -32,7 +32,6 @@ $(document).ready(function () {
 
     //change color of background
     //9am
-
     if (dayjs().format("H") > 9) {
       $("#hour-9").addClass("past");
     } else if (dayjs().format("H") == 9) {
